@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maybelline Tester Tracker — VIBS Enterprises</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;color:#1a1a1a;background:#f5f5f0;min-height:100vh}
+.wrap{max-width:1120px;margin:0 auto;padding:1.25rem 1rem}
+/* ── HEADER ── */
+.page-hdr{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem}
+.page-hdr h1{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.page-hdr p{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+.hdr-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+/* ── STORAGE NOTICE ── */
+#storage-notice{background:#fff8e1;border:1px solid #f0c040;border-radius:10px;padding:12px 16px;margin-bottom:1.25rem;font-size:12px;color:#7a5c00;display:none;line-height:1.6}
+#storage-notice strong{font-weight:700}
+/* ── METRICS ── */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.metric{background:#fff;border:1px solid #e8e8e0;border-radius:10px;padding:14px 16px}
+.metric-label{font-size:10px;color:#999;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.metric-value{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.metric-sub{font-size:11px;color:#aaa;margin-top:2px}
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid #e0e0d8;margin-bottom:1.25rem;overflow-x:auto;gap:0}
+.tab{padding:10px 16px;font-size:13px;cursor:pointer;border:none;background:none;color:#888;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;white-space:nowrap;transition:color .12s}
+.tab:hover{color:#1a1a1a}
+.tab.active{color:#1a1a1a;font-weight:700;border-bottom-color:#1a1a1a}
+/* ── CARD ── */
+.card{background:#fff;border:1px solid #e8e8e0;border-radius:12px;overflow:hidden;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-hdr{padding:11px 16px;border-bottom:1px solid #e8e8e0;display:flex;justify-content:space-between;align-items:center;background:#fafaf8}
+.card-hdr h3{font-size:13px;font-weight:700}
+/* ── FORM ELEMENTS ── */
+.row-ctrls{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+input,select,textarea{font-family:inherit;font-size:13px;color:#1a1a1a;background:#fff;border:1px solid #d0d0c8;border-radius:8px;padding:0 10px;outline:none;height:36px;transition:border-color .15s,box-shadow .15s}
+textarea{height:80px;resize:vertical;padding:8px 10px}
+input:focus,select:focus,textarea:focus{border-color:#999;box-shadow:0 0 0 2px rgba(0,0,0,.07)}
+button{font-family:inherit;font-size:12px;font-weight:500;padding:0 13px;height:36px;border-radius:8px;border:1px solid #d0d0c8;background:#fff;color:#1a1a1a;cursor:pointer;white-space:nowrap;transition:background .12s}
+button:hover{background:#f0f0e8}
+.btn-p{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.btn-p:hover{background:#333}
+.btn-g{background:#2d7a1f;color:#fff;border-color:#2d7a1f}
+.btn-g:hover{background:#1e6012}
+.btn-d{color:#c0392b;border-color:#f5c6c2}
+.btn-d:hover{background:#fff5f4}
+.btn-sm{font-size:11px;height:28px;padding:0 9px}
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#999;border-bottom:1px solid #e8e8e0;text-transform:uppercase;letter-spacing:.05em;background:#fafaf8}
+td{padding:9px 12px;border-bottom:1px solid #f0f0e8;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf8}
+/* ── BADGES ── */
+.badge{font-size:10px;padding:3px 8px;border-radius:999px;font-weight:700;display:inline-block;white-space:nowrap}
+.b-ok{background:#eafde4;color:#2d7a1f}
+.b-part{background:#fff7e0;color:#8a5c00}
+.b-out{background:#fdecea;color:#c0392b}
+/* ── FORM GRID ── */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.fg3{grid-template-columns:1fr 1fr 1fr}
+.ff{display:flex;flex-direction:column;gap:5px}
+.ff label{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em}
+.ff input,.ff select,.ff textarea{width:100%}
+.ffull{grid-column:1/-1}
+/* ── AVATAR ── */
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+/* ── MISC ── */
+.empty{text-align:center;padding:2.5rem;color:#bbb;font-size:13px;line-height:1.7}
+.sec{display:none}.sec.active{display:block}
+.mono{font-family:'SF Mono',SFMono-Regular,Consolas,monospace}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;right:20px;background:#1a1a1a;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9999;max-width:300px;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.toast.show{opacity:1}
+/* ── MODAL ── */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:1000;padding:1rem}
+.modal-box{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:460px;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.modal-box h3{font-size:15px;font-weight:700;margin-bottom:16px}
+/* ── SETUP CARD ── */
+.setup-step{display:flex;gap:12px;margin-bottom:18px}
+.step-num{width:26px;height:26px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-body h4{font-size:13px;font-weight:700;margin-bottom:4px}
+.step-body p,.step-body li{font-size:12px;color:#555;line-height:1.65}
+.step-body ul{margin-left:16px;margin-top:4px}
+.code-blk{font-family:'SF Mono',Consolas,monospace;font-size:11px;background:#18181a;color:#e8e6df;padding:12px 14px;border-radius:8px;margin-top:8px;overflow-x:auto;white-space:pre;line-height:1.6}
+.tip-box{background:#e8f0fe;border:1px solid #b5d0f7;border-radius:8px;padding:11px 14px;margin-top:6px}
+.tip-box p{font-size:12px;color:#1a4a8a;line-height:1.6}
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .fg3{grid-template-columns:1fr 1fr}
+  .fg{grid-template-columns:1fr}
+  .page-hdr{flex-direction:column}
+}
+@media print{.no-print{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap no-print">
+  <div class="page-hdr">
+    <div>
+      <h1>Maybelline Tester Tracker</h1>
+      <p>VIBS Enterprises &nbsp;·&nbsp; Invoice 9004852080 &nbsp;·&nbsp; L'Oréal East Africa Ltd</p>
+    </div>
+    <div class="hdr-actions">
+      <button onclick="exportData()" class="btn-g" title="Download all your data as a backup file">&#8675; Backup data</button>
+      <label class="btn-p" style="cursor:pointer;display:inline-flex;align-items:center;height:36px;padding:0 13px;font-size:12px;font-weight:500;border-radius:8px;border:1px solid #1a1a1a">
+        &#8673; Restore data
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+      </label>
+    </div>
+  </div>
+
+  <div id="storage-notice">
+    <strong>Note:</strong> You are running this file directly (not via a web URL). Data is saved in memory only for this session.
+    Use the <strong>Backup data</strong> button before closing, and <strong>Restore data</strong> when you reopen.
+    For permanent storage across devices, host this file on GitHub Pages — see the <strong>GitHub Setup</strong> tab.
+  </div>
+
+  <div class="metrics" id="met"></div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="sw('inv')">Inventory</button>
+    <button class="tab" onclick="sw('receive')">Receive / Import</button>
+    <button class="tab" onclick="sw('cust')">Customers</button>
+    <button class="tab" onclick="sw('dist')">Issue testers</button>
+    <button class="tab" onclick="sw('log')">Distribution log</button>
+    <button class="tab" onclick="sw('notes')">Delivery notes</button>
+    <button class="tab" onclick="sw('github')">GitHub setup</button>
+  </div>
+
+  <div id="s-inv"     class="sec active"></div>
+  <div id="s-receive" class="sec"></div>
+  <div id="s-cust"    class="sec"></div>
+  <div id="s-dist"    class="sec"></div>
+  <div id="s-log"     class="sec"></div>
+  <div id="s-notes"   class="sec"></div>
+  <div id="s-github"  class="sec"></div>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="edit-modal" class="modal">
+  <div class="modal-box">
+    <h3>Edit inventory item</h3>
+    <div class="fg">
+      <div class="ff"><label>Barcode</label><input id="e-bar" type="text"></div>
+      <div class="ff"><label>Item code *</label><input id="e-code" type="text"></div>
+      <div class="ff ffull"><label>Description *</label><input id="e-desc" type="text"></div>
+      <div class="ff"><label>Total stock qty *</label><input id="e-qty" type="number" min="0"></div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:10px">
+      <button onclick="closeEdit()" style="flex:1">Cancel</button>
+      <button onclick="saveEdit()" class="btn-p" style="flex:1">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+/* ═══════════════════════════════════════
+   STORAGE — works on GitHub Pages (HTTPS)
+   and gracefully falls back to memory
+   when opened as a local file://
+═══════════════════════════════════════ */
+const MEM = {};
+let storageOK = false;
+
+function initStorage() {
+  try {
+    localStorage.setItem('__test__', '1');
+    localStorage.removeItem('__test__');
+    storageOK = true;
+  } catch(e) {
+    storageOK = false;
+    document.getElementById('storage-notice').style.display = 'block';
+  }
+}
+
+function store(key, val) {
+  const s = JSON.stringify(val);
+  if (storageOK) {
+    try { localStorage.setItem(key, s); return; } catch(e) {}
+  }
+  MEM[key] = s;
+}
+
+function retrieve(key) {
+  try {
+    const s = storageOK ? localStorage.getItem(key) : (MEM[key] || null);
+    return s ? JSON.parse(s) : null;
+  } catch(e) { return null; }
+}
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+const INITIAL_PRODUCTS = [
+  {barcode:'104241',code:'YKE10424',desc:'MNY FIT ME FDT MATTE P 220 NU INT',qty:9},
+  {barcode:'940023',code:'YKE10475',desc:'MNY F&P FOUNDATION TOFFEE 330',qty:2},
+  {barcode:'100069',code:'YKE10006',desc:'MNY FIT ME M&P FTDN ESPRESSO 365',qty:2},
+  {barcode:'295222',code:'YKE10460',desc:'MNY FIT ME M&P FTDN PECAN 355',qty:2},
+  {barcode:'100502',code:'YKE10050',desc:'MNY FIT ME MATTE N PORELESS',qty:5},
+  {barcode:'104234',code:'YKE10423',desc:'MNY FM MATTE AND P FTDN LATTE 358',qty:3},
+  {barcode:'48040', code:'YKE10479',desc:'MNY SS M INK B 115 FOUNDER',qty:3},
+  {barcode:'103480',code:'YKE10348',desc:'MNY FIT ME MATTE & PORELESS FDN',qty:3},
+  {barcode:'100830',code:'YKE10083',desc:'MNY LIFTER GLOSS NU 004 SILK',qty:1},
+  {barcode:'100854',code:'YKE10085',desc:'MNY LIFTER GLOSS NU 007 AMBER',qty:2},
+  {barcode:'105217',code:'YKE10521',desc:'MNY VINYL INK 135 FEARLESS NU INT',qty:1},
+  {barcode:'653008',code:'YKE10504',desc:'MNY SUPERSTAY GLOW TINT 64 NU',qty:1},
+  {barcode:'776004',code:'YKE10498',desc:'MNY LIFTER GLOSS NU 021 TESTER',qty:6},
+  {barcode:'15950', code:'YKE10445',desc:'MNY LIP LIFTER GLOSS NU 022',qty:4},
+  {barcode:'779005',code:'YKE10499',desc:'MNY LIFTER GLOSS NU 024',qty:5},
+  {barcode:'103817',code:'YKE10381',desc:'MNY VINYL INK 165 EDGY NU INT',qty:2},
+  {barcode:'103824',code:'YKE10382',desc:'MNY VINYL INK 170 UNAFRAID NU INT',qty:2},
+  {barcode:'104197',code:'YKE10419',desc:'MNY FIT ME POWDER 340 CAPPUCCINO',qty:1},
+  {barcode:'103916',code:'YKE10391',desc:'MNY LIFTER PLUMP 001 BLUSH BLAZE',qty:1},
+  {barcode:'866002',code:'YKE10510',desc:'MNY LIFTER PLUMP 008 HOT HONEY',qty:1},
+  {barcode:'841009',code:'YKE10516',desc:'MNY SUPERSTAY POWDER 59 NU INT',qty:1},
+  {barcode:'163002',code:'YKE10464',desc:'MNY SS LUMI FDT 337 INTER',qty:1},
+  {barcode:'161008',code:'YKE10466',desc:'MNY SS LUMI FDT M 350 INTER',qty:2},
+  {barcode:'228008',code:'YKE10471',desc:'MNY SS LUMI FDT M 351',qty:3},
+  {barcode:'229005',code:'YKE10472',desc:'MNY SS LUMI FDT M 355',qty:2},
+  {barcode:'105545',code:'YKE10554',desc:'MNY FACE LIFTER STIX 55 NU INT',qty:1},
+  {barcode:'105484',code:'YKE10548',desc:'MNY SSTAY MATTE INK 525 VIXEN NU',qty:1},
+  {barcode:'105491',code:'YKE10549',desc:'MNY SSTAY MATTE INK 112 COMPOSER NU',qty:3},
+  {barcode:'103497',code:'YKE10349',desc:'MNY MATTE INK MOODMAKERS 445 ENERGI',qty:1}
+];
+
+let S = { products: [], customers: [], log: [] };
+
+function loadState() {
+  const saved = retrieve('mbl_v9');
+  if (saved && saved.products && saved.customers && saved.log) {
+    S = saved;
+  } else {
+    S = { products: JSON.parse(JSON.stringify(INITIAL_PRODUCTS)), customers: [], log: [] };
+  }
+}
+
+function saveState() {
+  store('mbl_v9', S);
+}
+
+/* ═══════════════════════════════════════
+   EXPORT / IMPORT (cross-device sync)
+═══════════════════════════════════════ */
+function exportData() {
+  const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tester_tracker_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  toast('Backup downloaded — transfer to your other device and use Restore data');
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!data.products || !data.customers || !data.log) throw new Error('Invalid file structure');
+      S = data;
+      saveState();
+      upMet();
+      renderCurrent();
+      toast('Data restored — ' + S.products.length + ' products, ' + S.customers.length + ' customers, ' + S.log.length + ' log entries');
+    } catch(err) {
+      toast('Could not read backup file: ' + err.message, true);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+/* ═══════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════ */
+function getProd(code) { return S.products.find(p => p.code===code || p.barcode===code); }
+function issued(code) { return S.log.filter(l=>l.code===code).reduce((a,l)=>a+l.qty,0); }
+function remaining(code) { const p=getProd(code); return p ? p.qty-issued(code) : 0; }
+function ini(n) { return n.trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+
+const AVC=[['#dbeafe','#1e40af'],['#d1fae5','#065f46'],['#fef3c7','#92400e'],
+           ['#fce7f3','#9d174d'],['#ede9fe','#4c1d95'],['#dcfce7','#14532d'],
+           ['#ffedd5','#7c2d12'],['#e0f2fe','#0c4a6e'],['#f0fdf4','#166534']];
+function avc(i){return AVC[i%AVC.length];}
+
+function toast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = isErr ? '#c0392b' : '#1a1a1a';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function csvDL(rows, name) {
+  const csv = rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = name; a.click();
+}
+
+/* ═══════════════════════════════════════
+   METRICS
+═══════════════════════════════════════ */
+function upMet() {
+  const tq = S.products.reduce((a,p)=>a+p.qty,0);
+  const ti = S.products.reduce((a,p)=>a+issued(p.code),0);
+  const pct = tq>0 ? Math.round(ti/tq*100) : 0;
+  document.getElementById('met').innerHTML = `
+    <div class="metric"><div class="metric-label">Total units</div><div class="metric-value">${tq}</div></div>
+    <div class="metric"><div class="metric-label">Issued</div><div class="metric-value">${ti}</div><div class="metric-sub">${pct}% of stock</div></div>
+    <div class="metric"><div class="metric-label">Remaining</div><div class="metric-value">${tq-ti}</div></div>
+    <div class="metric"><div class="metric-label">Customers</div><div class="metric-value">${S.customers.length}</div></div>`;
+}
+
+/* ═══════════════════════════════════════
+   TAB: INVENTORY
+═══════════════════════════════════════ */
+function rInv() {
+  const q = (document.getElementById('isrch')||{}).value||'';
+  const filt = (document.getElementById('ifilt')||{}).value||'all';
+  let rows = S.products.filter(p => {
+    const mq = !q || p.desc.toLowerCase().includes(q.toLowerCase()) ||
+                p.code.toLowerCase().includes(q.toLowerCase()) ||
+                (p.barcode||'').includes(q);
+    const iv=issued(p.code), rv=remaining(p.code);
+    const ms = filt==='all' || (filt==='avail'&&rv>0&&iv===0) ||
+               (filt==='part'&&iv>0&&rv>0) || (filt==='out'&&rv===0);
+    return mq && ms;
+  });
+
+  document.getElementById('s-inv').innerHTML = `
+    <div class="row-ctrls">
+      <input type="text" id="isrch" placeholder="Search barcode, code or description..." value="${q}" oninput="rInv()" style="flex:1;min-width:180px;max-width:300px">
+      <select id="ifilt" onchange="rInv()" style="width:140px">
+        <option value="all">All items</option>
+        <option value="avail">Available</option>
+        <option value="part">Partial</option>
+        <option value="out">All issued</option>
+      </select>
+      <button onclick="expInv()">Export CSV</button>
+    </div>
+    <div class="card"><div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th style="width:90px">Barcode</th>
+        <th style="width:105px">Item code</th>
+        <th>Description</th>
+        <th style="width:55px;text-align:center">Total</th>
+        <th style="width:60px;text-align:center">Issued</th>
+        <th style="width:60px;text-align:center">Left</th>
+        <th style="width:95px">Status</th>
+        <th style="width:120px">Actions</th>
+      </tr></thead>
+      <tbody>${rows.map(p=>{
+        const iv=issued(p.code),rv=remaining(p.code);
+        const sc=rv===0?'#c0392b':iv>0?'#8a5c00':'#2d7a1f';
+        const bl=rv===0?'<span class="badge b-out">All issued</span>':
+                 iv>0?'<span class="badge b-part">Partial</span>':
+                 '<span class="badge b-ok">Available</span>';
+        return `<tr>
+          <td class="mono" style="font-size:11px;color:#999">${p.barcode||'—'}</td>
+          <td class="mono" style="font-size:11px;color:#999">${p.code}</td>
+          <td style="font-weight:500">${p.desc}</td>
+          <td style="text-align:center">${p.qty}</td>
+          <td style="text-align:center">${iv}</td>
+          <td style="text-align:center;font-weight:700;color:${sc}">${rv}</td>
+          <td>${bl}</td>
+          <td>
+            <button class="btn-sm" onclick="openEdit('${p.code}')">Edit</button>
+            <button class="btn-sm btn-d" onclick="delProd('${p.code}')">Delete</button>
+          </td>
+        </tr>`;
+      }).join('')||'<tr><td colspan="8" class="empty">No items match</td></tr>'}</tbody>
+    </table></div></div>`;
+}
+
+/* ── EDIT MODAL ── */
+let _editCode = null;
+function openEdit(code) {
+  const p = getProd(code); if(!p) return;
+  _editCode = code;
+  document.getElementById('e-bar').value  = p.barcode||'';
+  document.getElementById('e-code').value = p.code;
+  document.getElementById('e-desc').value = p.desc;
+  document.getElementById('e-qty').value  = p.qty;
+  document.getElementById('edit-modal').style.display='flex';
+}
+function saveEdit() {
+  if(!_editCode) return;
+  const p = getProd(_editCode); if(!p) return;
+  const newCode = (document.getElementById('e-code').value||'').trim().toUpperCase();
+  const newDesc = (document.getElementById('e-desc').value||'').trim();
+  const newQty  = parseInt(document.getElementById('e-qty').value)||0;
+  if(!newCode||!newDesc){toast('Code and description are required',true);return;}
+  p.barcode = (document.getElementById('e-bar').value||'').trim();
+  p.code    = newCode;
+  p.desc    = newDesc;
+  p.qty     = newQty;
+  saveState(); closeEdit(); rInv(); upMet();
+  toast('Item updated');
+}
+function closeEdit() { _editCode=null; document.getElementById('edit-modal').style.display='none'; }
+function delProd(code) {
+  const p = getProd(code);
+  if(!confirm('Delete "'+p.desc+'" from inventory?')) return;
+  S.products = S.products.filter(x=>x.code!==code&&x.barcode!==code);
+  saveState(); rInv(); upMet(); toast('Item deleted');
+}
+function expInv() {
+  const rows=[['Barcode','Item Code','Description','Total Qty','Issued','Remaining','Status']];
+  S.products.forEach(p=>{
+    const iv=issued(p.code),rv=remaining(p.code);
+    rows.push([p.barcode||'',p.code,p.desc,p.qty,iv,rv,rv===0?'All issued':iv>0?'Partial':'Available']);
+  });
+  csvDL(rows,'inventory_9004852080.csv');
+}
+
+/* ═══════════════════════════════════════
+   TAB: RECEIVE / IMPORT
+═══════════════════════════════════════ */
+function rReceive() {
+  document.getElementById('s-receive').innerHTML = `
+    <div class="card">
+      <div class="card-hdr"><h3>Manually receive testers</h3></div>
+      <div class="fg">
+        <div class="ff"><label>Barcode (optional)</label><input type="text" id="r-bar" placeholder="e.g. 104241"></div>
+        <div class="ff"><label>Item code *</label><input type="text" id="r-code" placeholder="e.g. YKE10424"></div>
+        <div class="ff ffull"><label>Description *</label><input type="text" id="r-desc" placeholder="e.g. MNY FIT ME FDT MATTE P 220 NU INT"></div>
+        <div class="ff"><label>Quantity *</label><input type="number" id="r-qty" value="1" min="1" style="width:120px"></div>
+      </div>
+      <div style="padding:0 16px 16px;display:flex;gap:8px;align-items:center">
+        <button class="btn-p" onclick="addManual()">Add to inventory</button>
+        <span style="font-size:11px;color:#999">Existing items will have their stock increased</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><h3>Import CSV file</h3></div>
+      <div style="padding:16px">
+        <p style="font-size:12px;color:#666;margin-bottom:10px">Each row: <code style="font-family:monospace;background:#f0f0e8;padding:1px 5px;border-radius:4px">barcode, item_code, description, quantity</code> — no header row needed.</p>
+        <input type="file" id="csv-file" accept=".csv" style="width:100%;margin-bottom:10px">
+        <button class="btn-p" onclick="importCSV()">Import CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><h3>Import PDF invoice (L'Oréal format)</h3></div>
+      <div style="padding:16px">
+        <p style="font-size:12px;color:#666;margin-bottom:10px">Supports the SAP-generated L'Oréal East Africa invoice PDF. All lines are parsed automatically.</p>
+        <input type="file" id="pdf-file" accept=".pdf" style="width:100%;margin-bottom:10px">
+        <button class="btn-p" onclick="importPDF()">Parse &amp; import PDF</button>
+        <div id="pdf-progress" style="font-size:12px;color:#666;margin-top:8px"></div>
+      </div>
+    </div>`;
+}
+
+function addManual() {
+  const barcode = (document.getElementById('r-bar').value||'').trim();
+  const code    = (document.getElementById('r-code').value||'').trim().toUpperCase();
+  const desc    = (document.getElementById('r-desc').value||'').trim();
+  const qty     = parseInt(document.getElementById('r-qty').value)||0;
+  if(!code||!desc||qty<1){toast('Code, description and quantity are required',true);return;}
+  const existing = getProd(code);
+  if(existing){ existing.qty += qty; }
+  else { S.products.push({barcode,code,desc,qty}); }
+  saveState(); rReceive(); rInv(); upMet();
+  toast(qty+' units added — '+desc);
+  ['r-bar','r-code','r-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('r-qty').value='1';
+}
+
+function importCSV() {
+  const fi = document.getElementById('csv-file');
+  if(!fi.files.length){toast('Please select a CSV file',true);return;}
+  const reader = new FileReader();
+  reader.onload = e => {
+    const lines = e.target.result.split('\n').map(l=>l.trim()).filter(l=>l);
+    let added=0;
+    lines.forEach(line=>{
+      const cols = line.split(',').map(c=>c.trim().replace(/^"|"$/g,''));
+      if(cols.length<4) return;
+      const barcode=cols[0], code=(cols[1]||'').toUpperCase(), desc=cols[2], qty=parseInt(cols[3])||0;
+      if(!code||!desc||qty<1) return;
+      const ex=getProd(code);
+      if(ex){ex.qty+=qty;} else {S.products.push({barcode,code,desc,qty});}
+      added++;
+    });
+    saveState(); rReceive(); rInv(); upMet();
+    toast(added+' items imported from CSV');
+    fi.value='';
+  };
+  reader.readAsText(fi.files[0]);
+}
+
+/* ── PDF IMPORT — Y-position grouping strategy ──
+   pdf.js returns individual text chunks per Td operator.
+   We group all chunks by their Y coordinate (rounded to
+   nearest 2px), sort each group left-to-right by X,
+   then reconstruct logical text lines. This reliably
+   captures all rows regardless of how the PDF was generated.
+─────────────────────────────────────────────────── */
+async function importPDF() {
+  const fi = document.getElementById('pdf-file');
+  if(!fi.files.length){toast('Please select a PDF file',true);return;}
+  const prog = document.getElementById('pdf-progress');
+  prog.textContent = 'Reading PDF...';
+
+  try {
+    const ab = await fi.files[0].arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({data:ab}).promise;
+    const totalPages = pdf.numPages;
+    prog.textContent = 'Parsing '+totalPages+' page(s)...';
+
+    /* Collect ALL text items across all pages with their positions */
+    const allItems = [];
+    for(let pg=1; pg<=totalPages; pg++) {
+      const page = await pdf.getPage(pg);
+      const tc   = await page.getTextContent();
+      const vp   = page.getViewport({scale:1});
+      tc.items.forEach(item=>{
+        if(!item.str||!item.str.trim()) return;
+        /* Transform Y: PDF Y is bottom-up; we flip to top-down */
+        const y = Math.round((vp.height - item.transform[5]) / 2) * 2;
+        const x = Math.round(item.transform[4]);
+        allItems.push({str:item.str.trim(), x, y, pg});
+      });
+    }
+
+    /* Group items by page+Y into logical text lines */
+    const lineMap = {};
+    allItems.forEach(item=>{
+      const key = item.pg+'_'+item.y;
+      if(!lineMap[key]) lineMap[key] = [];
+      lineMap[key].push(item);
+    });
+
+    /* Sort each line left-to-right and join into a string */
+    const lines = Object.values(lineMap).map(items=>{
+      items.sort((a,b)=>a.x-b.x);
+      return items.map(i=>i.str).join(' ');
+    });
+
+    /* Match invoice table rows.
+       Pattern: line_no  barcode  item_code  description  qty  0.00  0.00
+       - line_no:   1-2 digits
+       - barcode:   5-6 digits
+       - item_code: starts with YKE (L'Oréal Kenya item codes)
+       - description: anything up to the quantity
+       - qty: integer
+       We use two patterns: one for YKE codes, one for fallback numeric codes */
+    const YKE_PAT = /^\d{1,2}\s+(\d{4,6})\s+(YKE\w+)\s+(.+?)\s+(\d+)\s+0\.00/;
+    const GEN_PAT = /^\d{1,2}\s+(\d{4,6})\s+([A-Z]{2,}[A-Z0-9]{4,})\s+(.+?)\s+(\d+)\s+0\.00/;
+
+    let added=0, updated=0;
+    const seen = new Set();
+
+    lines.forEach(line=>{
+      let m = line.match(YKE_PAT) || line.match(GEN_PAT);
+      if(!m) return;
+      const barcode = m[1];
+      const code    = m[2].toUpperCase();
+      const desc    = m[3].replace(/\s+/g,' ').trim();
+      const qty     = parseInt(m[4])||0;
+      if(!code||!desc||qty<1) return;
+      if(seen.has(code)) return; /* deduplicate */
+      seen.add(code);
+      const ex = getProd(code);
+      if(ex){ ex.qty+=qty; updated++; }
+      else { S.products.push({barcode,code,desc,qty}); added++; }
+    });
+
+    fi.value='';
+    if(added+updated===0){
+      prog.textContent='';
+      toast('No invoice rows found — ensure this is a L\'Oréal East Africa invoice PDF',true);
+      return;
+    }
+    saveState(); rReceive(); rInv(); upMet();
+    prog.textContent='';
+    toast((added+updated)+' items parsed ('+added+' new, '+updated+' stock increased)');
+  } catch(err) {
+    prog.textContent='';
+    toast('PDF error: '+err.message, true);
+  }
+}
+
+/* ═══════════════════════════════════════
+   TAB: CUSTOMERS
+═══════════════════════════════════════ */
+function rCust() {
+  document.getElementById('s-cust').innerHTML = `
+    <div class="card">
+      <div class="card-hdr"><h3>Add new customer</h3></div>
+      <div class="fg fg3">
+        <div class="ff"><label>Name *</label><input type="text" id="cn" placeholder="Business or person name"></div>
+        <div class="ff"><label>Phone</label><input type="tel" id="cp" placeholder="+254 700 000 000"></div>
+        <div class="ff"><label>Location</label><input type="text" id="cl" placeholder="Area / town"></div>
+        <div class="ff ffull"><label>Notes</label><input type="text" id="cno" placeholder="e.g. salon name, outlet type"></div>
+      </div>
+      <div style="padding:0 16px 16px"><button class="btn-p" onclick="addCust()">+ Add customer</button></div>
+    </div>
+    <div class="card">
+      <div class="card-hdr">
+        <h3>Customers (${S.customers.length})</h3>
+        <button onclick="expCust()">Export CSV</button>
+      </div>
+      ${S.customers.length===0?'<div class="empty">No customers yet. Add your first one above.</div>':`
+      <table><thead><tr>
+        <th style="width:38px"></th>
+        <th>Name</th>
+        <th style="width:140px">Phone</th>
+        <th style="width:120px">Location</th>
+        <th style="width:80px;text-align:center">Received</th>
+        <th style="width:65px;text-align:center">SKUs</th>
+        <th style="width:70px"></th>
+      </tr></thead><tbody>
+      ${S.customers.map((c,i)=>{
+        const [bg,tc]=avc(i);
+        const cl=S.log.filter(l=>l.custId===c.id);
+        const tot=cl.reduce((a,l)=>a+l.qty,0);
+        const uniq=new Set(cl.map(l=>l.code)).size;
+        return `<tr>
+          <td><div class="av" style="background:${bg};color:${tc}">${ini(c.name)}</div></td>
+          <td>
+            <div style="font-weight:600">${c.name}</div>
+            ${c.notes?`<div style="font-size:11px;color:#999;margin-top:1px">${c.notes}</div>`:''}
+          </td>
+          <td style="color:#888">${c.phone||'—'}</td>
+          <td style="color:#888">${c.location||'—'}</td>
+          <td style="text-align:center;font-weight:700">${tot}</td>
+          <td style="text-align:center;color:#888">${uniq}</td>
+          <td style="text-align:right"><button class="btn-sm btn-d" onclick="delCust('${c.id}')">Remove</button></td>
+        </tr>`;
+      }).join('')}
+      </tbody></table>`}
+    </div>`;
+}
+
+function addCust() {
+  const name=(document.getElementById('cn').value||'').trim();
+  if(!name){toast('Customer name is required',true);return;}
+  S.customers.push({
+    id:'c'+Date.now(),
+    name,
+    phone:(document.getElementById('cp').value||'').trim(),
+    location:(document.getElementById('cl').value||'').trim(),
+    notes:(document.getElementById('cno').value||'').trim()
+  });
+  saveState(); rCust(); upMet();
+  toast('Customer "'+name+'" added');
+}
+
+function delCust(id) {
+  const c=S.customers.find(x=>x.id===id);
+  if(!confirm('Remove '+c.name+'? Their log entries stay.')) return;
+  S.customers=S.customers.filter(x=>x.id!==id);
+  saveState(); rCust(); upMet(); toast('Customer removed');
+}
+
+function expCust() {
+  const rows=[['Name','Phone','Location','Notes','Total Units','Unique SKUs']];
+  S.customers.forEach(c=>{
+    const cl=S.log.filter(l=>l.custId===c.id);
+    rows.push([c.name,c.phone||'',c.location||'',c.notes||'',
+      cl.reduce((a,l)=>a+l.qty,0),new Set(cl.map(l=>l.code)).size]);
+  });
+  csvDL(rows,'customers_vibs.csv');
+}
+
+/* ═══════════════════════════════════════
+   TAB: ISSUE TESTERS
+═══════════════════════════════════════ */
+function rDist() {
+  const co=S.customers.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  const io=S.products.map(p=>{
+    const r=remaining(p.code);
+    return `<option value="${p.code}"${r===0?' disabled':''}>${p.desc} (${r} left)</option>`;
+  }).join('');
+
+  document.getElementById('s-dist').innerHTML = `
+    ${S.customers.length===0?'<div class="card"><div class="empty">Add customers first before issuing testers.</div></div>':''}
+    <div class="card">
+      <div class="card-hdr"><h3>Issue testers to a customer</h3></div>
+      <div class="fg">
+        <div class="ff"><label>Customer *</label><select id="dc"><option value="">— Select customer —</option>${co}</select></div>
+        <div class="ff"><label>Date</label><input type="date" id="dd" value="${new Date().toISOString().slice(0,10)}"></div>
+        <div class="ff"><label>Item *</label><select id="di"><option value="">— Select item —</option>${io}</select></div>
+        <div class="ff"><label>Quantity *</label><input type="number" id="dq" placeholder="e.g. 1" min="1" style="width:120px"></div>
+        <div class="ff ffull"><label>Notes (optional)</label><input type="text" id="dn" placeholder="e.g. for counter display, promo event"></div>
+      </div>
+      <div style="padding:0 16px 16px"><button class="btn-p" onclick="doIssue()">Issue tester</button></div>
+    </div>
+    <div id="cust-hist"></div>`;
+
+  document.getElementById('dc').addEventListener('change', function(){
+    const id=this.value;
+    if(!id){document.getElementById('cust-hist').innerHTML='';return;}
+    const c=S.customers.find(x=>x.id===id);
+    const ci=S.customers.indexOf(c);
+    const [bg,tc]=avc(ci);
+    const cl=S.log.filter(l=>l.custId===id);
+    const tot=cl.reduce((a,l)=>a+l.qty,0);
+    if(cl.length===0){
+      document.getElementById('cust-hist').innerHTML=`<div class="card"><div class="empty">No testers issued to ${c.name} yet.</div></div>`;
+      return;
+    }
+    const byItem={};
+    cl.forEach(l=>{
+      if(!byItem[l.code]) byItem[l.code]={desc:l.desc,qty:0,last:''};
+      byItem[l.code].qty+=l.qty;
+      if(l.date>byItem[l.code].last) byItem[l.code].last=l.date;
+    });
+    document.getElementById('cust-hist').innerHTML=`
+      <div class="card">
+        <div class="card-hdr">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="av" style="background:${bg};color:${tc}">${ini(c.name)}</div>
+            <div><div style="font-weight:700">${c.name}</div>
+            <div style="font-size:11px;color:#999">${c.location||''}${c.phone?' · '+c.phone:''}</div></div>
+          </div>
+          <span style="font-size:12px;color:#999">${tot} unit${tot!==1?'s':''} total</span>
+        </div>
+        <table><thead><tr>
+          <th>Item</th>
+          <th style="width:75px;text-align:center">Given</th>
+          <th style="width:95px">Last issued</th>
+        </tr></thead><tbody>
+        ${Object.entries(byItem).map(([code,v])=>`
+          <tr>
+            <td><div style="font-weight:500">${v.desc}</div>
+            <div class="mono" style="font-size:11px;color:#999">${code}</div></td>
+            <td style="text-align:center;font-weight:700">${v.qty}</td>
+            <td style="color:#888;font-size:12px">${v.last}</td>
+          </tr>`).join('')}
+        </tbody></table>
+      </div>`;
+  });
+}
+
+function doIssue() {
+  const cid=(document.getElementById('dc').value||'').trim();
+  const code=(document.getElementById('di').value||'').trim();
+  const qty=parseInt(document.getElementById('dq').value)||0;
+  const date=document.getElementById('dd').value;
+  const notes=(document.getElementById('dn').value||'').trim();
+  if(!cid){toast('Please select a customer',true);return;}
+  if(!code){toast('Please select an item',true);return;}
+  if(qty<1){toast('Quantity must be at least 1',true);return;}
+  const rv=remaining(code);
+  if(qty>rv){toast('Only '+rv+' unit(s) remaining for that item',true);return;}
+  const p=getProd(code);
+  S.log.unshift({
+    id:'l'+Date.now(),custId:cid,code,
+    desc:p.desc,qty,
+    date:date||new Date().toISOString().slice(0,10),
+    notes
+  });
+  saveState(); upMet();
+  toast('Issued '+qty+' × '+p.desc);
+  document.getElementById('dq').value='';
+  document.getElementById('dn').value='';
+  document.getElementById('di').value='';
+  rDist();
+}
+
+/* ═══════════════════════════════════════
+   TAB: DISTRIBUTION LOG
+═══════════════════════════════════════ */
+function rLog() {
+  const q=(document.getElementById('lq')||{}).value||'';
+  const fc=(document.getElementById('lc')||{}).value||'';
+  let rows=[...S.log];
+  if(q) rows=rows.filter(l=>l.desc.toLowerCase().includes(q.toLowerCase())||
+                            l.code.toLowerCase().includes(q.toLowerCase()));
+  if(fc) rows=rows.filter(l=>l.custId===fc);
+  const co=S.customers.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+
+  document.getElementById('s-log').innerHTML=`
+    <div class="row-ctrls">
+      <input type="text" id="lq" placeholder="Search item..." value="${q}" oninput="rLog()" style="width:180px">
+      <select id="lc" onchange="rLog()" style="width:160px">
+        <option value="">All customers</option>${co}
+      </select>
+      <button onclick="expLog()">Export CSV</button>
+    </div>
+    <div class="card">
+      <div class="card-hdr">
+        <h3>Distribution log</h3>
+        <span style="font-size:12px;color:#999">${rows.length} record${rows.length!==1?'s':''}</span>
+      </div>
+      ${rows.length===0?'<div class="empty">No records yet.</div>':`
+      <div style="overflow-x:auto"><table>
+        <thead><tr>
+          <th style="width:88px">Date</th>
+          <th style="width:34px"></th>
+          <th style="width:125px">Customer</th>
+          <th style="width:110px">Location</th>
+          <th>Item</th>
+          <th style="width:48px;text-align:center">Qty</th>
+          <th style="width:105px">Notes</th>
+          <th style="width:52px;text-align:center">Undo</th>
+        </tr></thead>
+        <tbody>${rows.map(l=>{
+          const ci=S.customers.findIndex(c=>c.id===l.custId);
+          const c=ci>=0?S.customers[ci]:null;
+          const [bg,tc]=avc(ci>=0?ci:0);
+          const cn=c?c.name:'Unknown';
+          return `<tr>
+            <td class="mono" style="font-size:11px;color:#999">${l.date}</td>
+            <td><div class="av" style="background:${bg};color:${tc};width:26px;height:26px;font-size:10px">${ini(cn)}</div></td>
+            <td style="font-weight:600">${cn}</td>
+            <td style="color:#888;font-size:12px">${c&&c.location?c.location:'—'}</td>
+            <td>
+              <div style="font-weight:500">${l.desc}</div>
+              <div class="mono" style="font-size:11px;color:#999">${l.code}</div>
+            </td>
+            <td style="text-align:center;font-weight:700">${l.qty}</td>
+            <td style="color:#888;font-size:11px">${l.notes||'—'}</td>
+            <td style="text-align:center">
+              <button class="btn-sm btn-d" onclick="undoLog('${l.id}')">Undo</button>
+            </td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table></div>`}
+    </div>`;
+}
+
+function undoLog(id) {
+  if(!confirm('Remove this distribution record?')) return;
+  S.log=S.log.filter(l=>l.id!==id);
+  saveState(); rLog(); upMet(); toast('Record removed');
+}
+
+function expLog() {
+  const rows=[['Date','Customer','Phone','Location','Item Code','Description','Qty','Notes']];
+  S.log.forEach(l=>{
+    const c=S.customers.find(x=>x.id===l.custId)||{name:'Unknown',phone:'',location:''};
+    rows.push([l.date,c.name,c.phone||'',c.location||'',l.code,l.desc,l.qty,l.notes||'']);
+  });
+  csvDL(rows,'distribution_log_vibs.csv');
+}
+
+/* ═══════════════════════════════════════
+   TAB: DELIVERY NOTES
+═══════════════════════════════════════ */
+function rNotes() {
+  const co=S.customers.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  document.getElementById('s-notes').innerHTML=`
+    <div class="card">
+      <div class="card-hdr"><h3>Generate printable delivery note</h3></div>
+      <div style="padding:16px">
+        <div class="ff" style="margin-bottom:12px;max-width:320px">
+          <label>Select customer</label>
+          <select id="note-cust">${co||'<option>No customers yet</option>'}</select>
+        </div>
+        <button class="btn-p" onclick="printNote()">Generate &amp; print</button>
+      </div>
+    </div>`;
+}
+
+function printNote() {
+  const cid=document.getElementById('note-cust').value;
+  if(!cid){toast('Please select a customer',true);return;}
+  const c=S.customers.find(x=>x.id===cid);
+  const cl=S.log.filter(l=>l.custId===cid);
+  if(cl.length===0){toast('No distributions for this customer yet',true);return;}
+  const html=`<html><head><meta charset="UTF-8">
+  <style>body{font-family:-apple-system,sans-serif;padding:40px 50px;max-width:800px;margin:0 auto}
+  h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .sub{font-size:12px;color:#888;margin-bottom:28px}
+  .row{display:flex;justify-content:space-between;margin-bottom:28px;gap:20px}
+  .addr strong{display:block;font-size:12px;font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;color:#888}
+  .addr p{font-size:13px;color:#333;line-height:1.6;margin:0}
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th{text-align:left;padding:9px 12px;border-bottom:2px solid #1a1a1a;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#888}
+  td{padding:9px 12px;border-bottom:1px solid #e8e8e0;font-size:13px}
+  .tot td{font-weight:700;border-bottom:none;border-top:2px solid #1a1a1a}
+  .footer{margin-top:48px;display:flex;justify-content:space-between}
+  .sig{border-top:1px solid #888;padding-top:6px;width:180px;text-align:center;font-size:11px;color:#888}
+  .stamp{margin-top:48px;font-size:11px;color:#bbb;text-align:center}
+  @media print{body{padding:20px 30px}}</style></head><body>
+  <h1>Maybelline Testers — Delivery Note</h1>
+  <div class="sub">L'Oréal East Africa Ltd &nbsp;·&nbsp; L'Oréal House, Mombasa Road, Nairobi &nbsp;·&nbsp; Invoice ref: 9004852080</div>
+  <div class="row">
+    <div class="addr"><strong>Delivered to</strong><p>${c.name}<br>${c.location||''}<br>${c.phone||''}<br>${c.notes||''}</p></div>
+    <div class="addr" style="text-align:right"><strong>Date</strong><p>${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</p></div>
+  </div>
+  <table><thead><tr><th>Item code</th><th>Description</th><th style="text-align:right">Qty</th><th style="text-align:right">Date issued</th></tr></thead>
+  <tbody>
+  ${cl.map(l=>`<tr><td style="font-family:monospace;font-size:11px;color:#888">${l.code}</td><td>${l.desc}</td><td style="text-align:right;font-weight:700">${l.qty}</td><td style="text-align:right;color:#888;font-size:12px">${l.date}</td></tr>`).join('')}
+  <tr class="tot"><td colspan="2">Total units</td><td style="text-align:right">${cl.reduce((a,l)=>a+l.qty,0)}</td><td></td></tr>
+  </tbody></table>
+  <div class="footer">
+    <div class="sig">Received by (signature &amp; stamp)</div>
+    <div class="sig">Issued by — VIBS Enterprises</div>
+  </div>
+  <div class="stamp">Zero-cost testers issued for display and promotional purposes only.</div>
+  </body></html>`;
+  const w=window.open('','_blank');
+  w.document.write(html); w.document.close();
+  setTimeout(()=>w.print(),400);
+}
+
+/* ═══════════════════════════════════════
+   TAB: GITHUB SETUP GUIDE
+═══════════════════════════════════════ */
+function rGithub() {
+  document.getElementById('s-github').innerHTML=`
+    <div class="card">
+      <div class="card-hdr"><h3>How to host this tracker on GitHub Pages (free, permanent, any device)</h3></div>
+      <div style="padding:20px 24px">
+
+        <div style="background:#e8f0fe;border:1px solid #b5d0f7;border-radius:8px;padding:12px 14px;margin-bottom:20px">
+          <p style="font-size:12px;color:#1a4a8a;line-height:1.65"><strong>What you get:</strong> A real web address like <code style="font-family:monospace;background:#d0e4fc;padding:1px 5px;border-radius:3px">https://yourname.github.io/tester-tracker</code> that you can open on any phone, laptop or tablet. Data is saved in that browser's local storage. Use the <strong>Backup / Restore</strong> buttons to move data between devices.</p>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Create a free GitHub account</h4>
+            <p>Go to <strong>github.com</strong> and click <strong>Sign up</strong>. Use your email, choose a username (e.g. <code>vibsenterprises</code>), and verify your email.</p>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Create a new repository</h4>
+            <p>After signing in, click the <strong>+</strong> icon (top right) → <strong>New repository</strong>. Name it <code>tester-tracker</code>. Make sure it is set to <strong>Public</strong>. Tick <strong>Add a README file</strong>. Click <strong>Create repository</strong>.</p>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Upload this HTML file</h4>
+            <p>Inside your new repository, click <strong>Add file</strong> → <strong>Upload files</strong>. Drag and drop the <code>tester_tracker_github.html</code> file onto the page. In the box at the bottom, type <em>"add tracker"</em> and click <strong>Commit changes</strong>.</p>
+            <p style="margin-top:6px">Then rename the file to <code>index.html</code>: click the file name → the pencil (edit) icon → change the filename at the top to <code>index.html</code> → click <strong>Commit changes</strong>.</p>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Enable GitHub Pages</h4>
+            <p>In your repository, click <strong>Settings</strong> (top menu) → scroll down to <strong>Pages</strong> (left sidebar). Under <strong>Source</strong>, select <strong>Deploy from a branch</strong>. Under <strong>Branch</strong>, select <strong>main</strong> and folder <strong>/ (root)</strong>. Click <strong>Save</strong>.</p>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Open your live tracker</h4>
+            <p>Wait about 1 minute, then go to:<br>
+            <code style="font-family:monospace;font-size:12px;background:#f0f0e8;padding:3px 8px;border-radius:4px;display:inline-block;margin-top:4px">https://YOUR-USERNAME.github.io/tester-tracker</code><br>
+            Replace <code>YOUR-USERNAME</code> with your GitHub username. Bookmark this link on every device.</p>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <h4>Sync data between devices</h4>
+            <p>Each browser stores data separately. To move your data:</p>
+            <ul>
+              <li>On device A: click <strong>Backup data</strong> — downloads a <code>.json</code> file</li>
+              <li>Transfer that file to device B (WhatsApp, email, Google Drive — any way)</li>
+              <li>On device B: click <strong>Restore data</strong> and select the file</li>
+            </ul>
+            <p style="margin-top:6px">Do this whenever you want to keep devices in sync.</p>
+          </div>
+        </div>
+
+        <div style="background:#fff7e0;border:1px solid #f0d060;border-radius:8px;padding:12px 14px;margin-top:4px">
+          <p style="font-size:12px;color:#7a5c00;line-height:1.65"><strong>Free forever:</strong> GitHub Pages has no cost, no ads, no time limits. The only requirement is that your repository stays Public.</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════
+   TAB SWITCHER
+═══════════════════════════════════════ */
+let _curTab = 'inv';
+const TABS = ['inv','receive','cust','dist','log','notes','github'];
+
+function sw(t) {
+  _curTab = t;
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',TABS[i]===t));
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+t).classList.add('active');
+  renderTab(t);
+}
+
+function renderTab(t) {
+  if(t==='inv')     rInv();
+  if(t==='receive') rReceive();
+  if(t==='cust')    rCust();
+  if(t==='dist')    rDist();
+  if(t==='log')     rLog();
+  if(t==='notes')   rNotes();
+  if(t==='github')  rGithub();
+}
+
+function renderCurrent() { renderTab(_curTab); }
+
+/* ═══════════════════════════════════════
+   BOOT
+═══════════════════════════════════════ */
+initStorage();
+loadState();
+upMet();
+rInv();
+</script>
+</body>
+</html>
